@@ -48,14 +48,14 @@ namespace easing {
         if(anim.elapsed == anim.duration) {
             anim.value = anim.end
         } else {
-            let progress = Math.pow(anim.elapsed / anim.duration, anim.multiplier)
+            let progress = anim.elapsed / anim.duration
 
             switch (anim.curve) {
                 case Curve.IN:
-                    progress = 1 - Math.cos(progress * Math.PI * 0.5)
+                    progress = 1 - Math.cos(Math.pow(progress, anim.multiplier) * Math.PI * 0.5)
                     break
                 case Curve.OUT:
-                    progress = Math.sin(progress * Math.PI * 0.5)
+                    progress = Math.sin(Math.pow(progress, 1 / anim.multiplier) * Math.PI * 0.5)
                     break
             }
 
@@ -114,9 +114,41 @@ namespace grid3d {
     type PlayerTracker = {
         td: Sprite,
         fp: Sprite,
-        mode: ViewMode
+        mode: ViewMode,
+        allowMapModeMovement: boolean,
     }
     export let player: PlayerTracker = null
+
+    export function setAssetPack(pack: AssetPack) {
+        assetsPack = pack
+        if (player != null) {
+            sprites.destroy(player.td)
+            player.td = sprites.create(assetsPack.topDown.playerTile)
+        } else {
+            player = {
+                td: sprites.create(assetsPack.topDown.playerTile),
+                fp: Render.getRenderSpriteVariable(),
+                mode: ViewMode.raycastingView,
+                allowMapModeMovement: false,
+            }
+        }
+        player.td.setFlag(SpriteFlag.RelativeToCamera, true)
+    }
+
+    setAssetPack({
+        topDown: {
+            playerTile: image.create(1, 1),
+            background: image.create(1, 1),
+        },
+        firstPerson: {
+            background: image.create(1, 1),
+        },
+    })
+
+    timedUpdate.add(() => {
+        player.td.x = player.fp.x - scene.cameraLeft()
+        player.td.y = player.fp.y - scene.cameraTop()
+    })
 
     /****************************************/
     /*  MOVEMENT                            */
@@ -156,14 +188,21 @@ namespace grid3d {
         return tracker
     }
 
-    export function setMovementAttributes(sprite: Sprite, stepDuration: number, stepCurve: easing.Curve, turnDuration: number, turnCurve: easing.Curve) {
+    export function setStepAttributes(sprite: Sprite, duration: number, curve: easing.Curve = easing.Curve.LINEAR, multiplier: number = 1.0) {
         const tracker = getTracker(sprite)
-        tracker.aim.x.duration = stepDuration
-        tracker.aim.y.duration = stepDuration
-        tracker.aim.x.curve = stepCurve
-        tracker.aim.y.curve = stepCurve
-        tracker.aim.angle.duration = turnDuration
-        tracker.aim.angle.curve = turnCurve
+        tracker.aim.x.duration = duration
+        tracker.aim.y.duration = duration
+        tracker.aim.x.curve = curve
+        tracker.aim.y.curve = curve
+        tracker.aim.x.multiplier = multiplier
+        tracker.aim.x.multiplier = multiplier
+    }
+
+    export function setTurnAttributes(sprite: Sprite, duration: number, curve: easing.Curve = easing.Curve.LINEAR, multiplier: number = 1.0) {
+        const tracker = getTracker(sprite)
+        tracker.aim.angle.duration = duration
+        tracker.aim.angle.curve = curve
+        tracker.aim.angle.multiplier = multiplier
     }
 
     export function step(sprite: Sprite, forward: boolean) {
@@ -241,7 +280,6 @@ namespace grid3d {
             if(tracker.sprite === player.fp) {
                 Render.setViewAngleInDegree(a)
             }
-            console.log(a)
             tracker.angle = (a + 360) % 360
             if (tracker.aim.angle.end == tracker.aim.angle.value) {
                 easing.reset(tracker.aim.angle, tracker.angle, tracker.angle)
@@ -252,44 +290,41 @@ namespace grid3d {
     Render.moveWithController(0, 0)
 
     timedUpdate.add(() => {
-        if (controller.left.isPressed()) {
-            turn(player.fp, false)
-        }
-        if (controller.right.isPressed()) {
-            turn(player.fp, true)
-        }
-        if (controller.up.isPressed()) {
-            step(player.fp, true)
-        }
-        if (controller.down.isPressed()) {
-            step(player.fp, false)
+        if(player.mode == ViewMode.raycastingView || player.allowMapModeMovement) {
+            if (controller.left.isPressed()) {
+                turn(player.fp, false)
+            }
+            if (controller.right.isPressed()) {
+                turn(player.fp, true)
+            }
+            if (controller.up.isPressed()) {
+                step(player.fp, true)
+            }
+            if (controller.down.isPressed()) {
+                step(player.fp, false)
+            }
         }
     })
 
     /****************************************/
     /*  MAPPING                             */
     /****************************************/
-    export function setAssetPack(pack: AssetPack) {
-        assetsPack = pack
-        player = {
-            td: sprites.create(assetsPack.topDown.playerTile),
-            fp: Render.getRenderSpriteVariable(),
-            mode: ViewMode.raycastingView,
-        }
-        player.td.setFlag(SpriteFlag.RelativeToCamera, true)
-    }
 
-    timedUpdate.add(() => {
-        player.td.x = player.fp.x - scene.cameraLeft()
-        player.td.y = player.fp.y - scene.cameraTop()
-    })
+    export function placeOnTile(sprite: Sprite, tile: tiles.Location) {
+        const tracker = getTracker(sprite)
+        tiles.placeOnTile(sprite, tile)
+        if(sprite === player.fp) {
+            tiles.placeOnTile(player.td, tile)
+        }
+        easing.reset(tracker.aim.x, sprite.x, sprite.x)
+        easing.reset(tracker.aim.y, sprite.y, sprite.y)
+    }
 
     export function loadMap(map: tiles.TileMapData) {
         tiles.setCurrentTilemap(map)
 
         const myStartTile = tiles.getTilesByType(assetsPack.topDown.playerTile)[0]
-        tiles.placeOnTile(player.fp, myStartTile)
-        tiles.placeOnTile(player.td, myStartTile)
+        placeOnTile(player.fp, myStartTile)
         tiles.setTileAt(myStartTile, assets.tile`blank-tile`)
     }
 
@@ -306,6 +341,7 @@ namespace grid3d {
         player.td.setFlag(SpriteFlag.Invisible, mode != ViewMode.tilemapView)
         player.fp.setFlag(SpriteFlag.Invisible, mode != ViewMode.raycastingView)
         Render.setViewMode(mode)
+        player.mode = mode
     }
 }
 
@@ -327,9 +363,10 @@ controller.menu.onEvent(ControllerButtonEvent.Pressed, () => {
     grid3d.player.mode = 1 - grid3d.player.mode
     grid3d.setViewMode(grid3d.player.mode)
 })
-grid3d.setViewMode(grid3d.player.mode)
+grid3d.setStepAttributes(grid3d.player.fp, 300, easing.Curve.OUT)
+grid3d.setTurnAttributes(grid3d.player.fp, 300, easing.Curve.OUT)
 grid3d.loadMap(tilemap`level`)
-grid3d.setMovementAttributes(grid3d.player.fp, 300, easing.Curve.OUT, 400, easing.Curve.OUT)
+grid3d.setViewMode(grid3d.player.mode)
 
 // let test = sprites.create(assets.image`shoji-door`, SpriteKind.Food)
 // test.flags += sprites.Flag.RelativeToCamera
