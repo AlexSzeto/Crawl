@@ -1,17 +1,156 @@
 // Auto-generated code. Do not edit.
+namespace myImages {
+
+    helpers._registerFactory("image", function(name: string) {
+        switch(helpers.stringTrim(name)) {
+            case "myTiles.tile3":return img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`;
+            case "myTiles.tile4":
+            case "shoji-wall":return img`
+e e e e e e e e e e e e e e e e 
+e 9 9 9 9 9 9 9 9 9 9 9 9 9 9 e 
+e 5 1 1 1 1 1 1 1 1 1 1 1 1 5 e 
+e 5 1 1 1 1 1 1 1 1 1 1 1 1 5 e 
+e 5 1 1 1 1 1 1 1 1 1 1 1 1 5 e 
+e 5 1 1 1 1 1 1 1 1 1 1 1 1 5 e 
+e 5 1 1 1 1 1 1 1 1 1 1 1 1 5 e 
+e 5 1 1 1 1 1 1 1 1 1 1 1 1 5 e 
+e 5 1 1 1 1 1 1 1 1 1 1 1 1 5 e 
+e 5 1 1 1 1 1 1 1 1 1 1 1 1 5 e 
+e 5 1 1 1 1 1 1 1 1 1 1 1 1 5 e 
+e 9 9 9 9 9 9 9 7 9 9 9 9 7 9 e 
+e 9 9 7 9 b 9 7 9 9 7 9 7 9 9 e 
+e 9 7 9 b 7 7 9 9 7 7 b 9 7 9 e 
+e 7 b 7 7 7 b 7 7 7 b 7 7 7 9 e 
+e e e e e e e e e e e e e e e e 
+`;
+            case "myTiles.tile5":
+            case "blank-tile":return img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`;
+            case "myTiles.tile6":
+            case "dungeon-wall":return img`
+a a a a a a a a a a a a a a a a 
+b 9 b b a c b 9 b b a 9 9 b b a 
+b b b b a c b b b b a b b b b a 
+a a c c a a a a c c c a a c a a 
+9 b b a 9 b b b a b 9 9 b a c b 
+b b b a b b b b a b b b b a c b 
+a a c a c c a a c c c a a a a a 
+c 9 b b b a b b 9 b a 9 9 b b a 
+c b b b b a b b b b a b b b b a 
+a c c a a c a a a c c a c a a c 
+b b a c 9 9 b b a 9 b 9 b a 9 b 
+b b a c b b b b a b b b b c b b 
+a a c c c c a a c a c c c c a a 
+a b 9 b b c 9 9 b b a c 9 9 b b 
+a b b b b a b b b b a c b b b b 
+c a c c c c a a c c c a c c c c 
+`;
+            case "myTiles.tile7":
+            case "shoji-player":return img`
+. . . . . . . . . . . . . . . . 
+. . . . . . c c . . . . . . . . 
+. . . . . c c c c . . . . . . . 
+. . . . . c d c c . . . . . . . 
+. . . . . . d d c . . . . . . . 
+. . . . . b b b b c . . . . . . 
+. . c e b b b b b . c c . . . . 
+. . . c e b b b 7 . . . . . . . 
+. . . . c e 7 7 7 . . . . . . . 
+. . . . e 1 5 b b . . . . . . . 
+. . . . . b 1 5 b b . . . . . . 
+. . . . . b b 1 5 b . . . . . . 
+. . . . . b b b 1 5 . . . . . . 
+. . . . . b b b b 1 5 . . . . . 
+. . . . . b b b b b 1 5 . . . . 
+. . . . . b b b b b b . . . . . 
+`;
+            case "myTiles.tile8":
+            case "myTile":return img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`;
+        }
+        return null;
+    })
+
+    helpers._registerFactory("animation", function(name: string) {
+        switch(helpers.stringTrim(name)) {
+
+        }
+        return null;
+    })
+
+    helpers._registerFactory("song", function(name: string) {
+        switch(helpers.stringTrim(name)) {
+
+        }
+        return null;
+    })
+
+}
+// Auto-generated code. Do not edit.
+
+// Auto-generated code. Do not edit.
 namespace myTiles {
-    //% fixedInstance jres blockIdentity=images._tile
-    export const transparency16 = image.ofBuffer(hex``);
-    //% fixedInstance jres blockIdentity=images._tile
-    export const tile1 = image.ofBuffer(hex``);
-    //% fixedInstance jres blockIdentity=images._tile
-    export const tile2 = image.ofBuffer(hex``);
-    //% fixedInstance jres blockIdentity=images._tile
-    export const tile4 = image.ofBuffer(hex``);
     //% fixedInstance jres blockIdentity=images._tile
     export const tile3 = image.ofBuffer(hex``);
     //% fixedInstance jres blockIdentity=images._tile
+    export const tile4 = image.ofBuffer(hex``);
+    //% fixedInstance jres blockIdentity=images._tile
     export const tile5 = image.ofBuffer(hex``);
+    //% fixedInstance jres blockIdentity=images._tile
+    export const tile6 = image.ofBuffer(hex``);
+    //% fixedInstance jres blockIdentity=images._tile
+    export const tile7 = image.ofBuffer(hex``);
+    //% fixedInstance jres blockIdentity=images._tile
+    export const tile8 = image.ofBuffer(hex``);
 
     helpers._registerFactory("tilemap", function(name: string) {
         switch(helpers.stringTrim(name)) {
@@ -33,24 +172,24 @@ namespace myTiles {
 2 . . . . 2 . . . . . . . . . 2 
 2 . . . . 2 . . . . . . . . . 2 
 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
-`, [myTiles.transparency16,myTiles.tile3,myTiles.tile4,myTiles.tile1], TileScale.Sixteen);
+`, [myTiles.tile3,myTiles.tile7,myTiles.tile6,myTiles.tile4], TileScale.Sixteen);
         }
         return null;
     })
 
     helpers._registerFactory("tile", function(name: string) {
         switch(helpers.stringTrim(name)) {
-            case "transparency16":return transparency16;
+            case "tile3":return myTiles.tile3;
             case "shoji-wall":
-            case "tile1":return tile1;
+            case "tile4":return myTiles.tile4;
             case "blank-tile":
-            case "tile2":return tile2;
+            case "tile5":return myTiles.tile5;
             case "dungeon-wall":
-            case "tile4":return tile4;
+            case "tile6":return myTiles.tile6;
             case "shoji-player":
-            case "tile3":return tile3;
+            case "tile7":return myTiles.tile7;
             case "myTile":
-            case "tile5":return tile5;
+            case "tile8":return myTiles.tile8;
         }
         return null;
     })
